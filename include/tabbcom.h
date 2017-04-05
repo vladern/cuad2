@@ -1,6 +1,7 @@
-#ifndef TLISTACOM_H_
-#define TLISTACOM_H_
+#ifndef TABBCOM_H_
+#define TABBCOM_H_
 #include "tcomplejo.h"
+#include "tvectorcom.h"
 class TNodoABB
 {
     private:
@@ -20,7 +21,7 @@ class TNodoABB
         //copia
         void Copia(const TNodoABB &);
         // Sobrecarga del operador asignación
-        TNodoABB& operator=(const TListaNodo &);
+        TNodoABB& operator=(const TNodoABB &);
 };
 class TABBCom
 {
@@ -41,7 +42,7 @@ class TABBCom
         // Destructor
         ~TABBCom ();
         // Sobrecarga del operador asignación
-        TABBCom & operator=( TABBCom &);
+        TABBCom & operator=(TABBCom &);
         //--------------------Metodos-----------------------
         //--------------------------------------------------
         //--------------------------------------------------
