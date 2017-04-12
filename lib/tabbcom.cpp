@@ -1,5 +1,5 @@
 #include "tabbcom.h"
-
+#include <queue>
 TNodoABB::TNodoABB():item(),iz(),de()
 {
 
@@ -23,7 +23,7 @@ TABBCom::TABBCom()
     this->nodo=NULL;
 }
 // Constructor de copia
-TABBCom::TABBCom(TABBCom& arbol)
+TABBCom::TABBCom(const TABBCom& arbol)
 {
     this->nodo=NULL;
     this->Copia(arbol);
@@ -38,7 +38,7 @@ TABBCom::~TABBCom()
     }
 }
 // Sobrecarga del operador asignación
-TABBCom& TABBCom::operator=(TABBCom& arbol)
+TABBCom& TABBCom::operator=(const TABBCom& arbol)
 {
     if(this != &arbol)
     {
@@ -76,7 +76,7 @@ bool TABBCom::EsVacio() const
     }
 }
 // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
-int TABBCom::Nodos()
+int TABBCom::Nodos()const
 {
     if(this->EsVacio())
     {
@@ -175,7 +175,7 @@ TVectorCom TABBCom::Postorden()
 TVectorCom TABBCom::Niveles()
 {
     //cola de abb s
-    std::queue<TABBCom> c;
+    queue<TABBCom> c;
     //una arbol abb
     TABBCom aux;
     int pos=1;
@@ -186,20 +186,24 @@ TVectorCom TABBCom::Niveles()
     // mientras la cola no es vacia
     while(!c.empty())
     {
-        // auxiliar es igual a lo que haya en la cola
+        //auxiliar es igual a lo que haya en la cola
         aux = c.front();
         vec[pos]=aux.nodo->item;
+        //desencolar
         c.pop();
+        //si el subarbol de la izquierda no es vacio se inserta en cabeza el subarbol izquierdo
         if(!aux.nodo->iz.EsVacio())
             c.push(aux.nodo->iz);
+        //si el subarbol de la derecha no es vacio se inserta en cabeza el subarbol derecho
         if(!aux.nodo->de.EsVacio())
             c.push(aux.nodo->de);
+        //se aumenta la posición
+        pos++;
     }
     return vec;
-    
 }
 // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
-int TABBCom::Altura()
+int TABBCom::Altura()const
 {
     if(this->EsVacio())
     {

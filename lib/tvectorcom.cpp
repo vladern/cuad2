@@ -5,7 +5,7 @@ TVectorCom::TVectorCom():error()
     this->tamano=0;
     this->c=NULL;
 }
-TVectorCom::TVectorCom(int a):error()
+TVectorCom::TVectorCom(const int a):error()
 {
     if(a<0)
     {
@@ -75,7 +75,7 @@ bool TVectorCom::operator!=(const TVectorCom& vec)
 	return !((*this)==vec);
 }
 //sobrecarga del operador de [] de izquierda
-TComplejo& TVectorCom::operator[](int num)
+TComplejo& TVectorCom::operator[](const int num)
 {
 	if(num>=1 && num<=this->Tamano())
 	{
@@ -86,7 +86,7 @@ TComplejo& TVectorCom::operator[](int num)
 }
 
 //sobrecarga del operador de [] de derecha
-TComplejo TVectorCom::operator[](int num)const
+TComplejo TVectorCom::operator[](const int num)const
 {
 	if(num>=1 && num<=this->Tamano())
 	{
@@ -103,7 +103,7 @@ int TVectorCom::Tamano()const
 	return this->tamano;
 }
 //numero de TComplojos no vacios
-int TVectorCom::Ocupadas()
+int TVectorCom::Ocupadas()const
 {
   int cont = 0;
   if(this->c== NULL )
@@ -147,7 +147,7 @@ void TVectorCom::MostrarComplejos(double re)
 
 }
 // REDIMENSIONAR el vector de TComplejo
-bool TVectorCom::Redimensionar(int n) //mucho mas complejo que eso hay que recorer y destruir cada uno de los objetos si es necesario
+bool TVectorCom::Redimensionar(const int n) //mucho mas complejo que eso hay que recorer y destruir cada uno de los objetos si es necesario
 {
 	bool devolver =false;
 	TComplejo *auxiliar;

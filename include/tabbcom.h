@@ -1,9 +1,9 @@
-#ifndef TABBCOM_H_
-#define TABBCOM_H_
+#ifndef TABBCOM_H__
+#define TABBCOM_H__
 #include "tcomplejo.h"
 #include "tvectorcom.h"
 #include <algorithm>
-#include <queue>
+
 class TNodoABB;
 class TABBCom
 {
@@ -23,11 +23,11 @@ class TABBCom
         // Constructor por defecto
         TABBCom();
         // Constructor de copia
-        TABBCom(TABBCom &);
+        TABBCom(const TABBCom&);
         // Destructor
         ~TABBCom();
         // Sobrecarga del operador asignación
-        TABBCom & operator=(TABBCom &);
+        TABBCom & operator=(const TABBCom &);
         //--------------------Metodos-----------------------
         //--------------------------------------------------
         //--------------------------------------------------
@@ -41,15 +41,15 @@ class TABBCom
         // Borra el elemento en el árbol
         bool Borrar(TComplejo &);
         // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-        bool Buscar(TComplejo &);
+        bool Buscar(TComplejo &)const;
         // Devuelve el elemento en la raíz del árbol
-        TComplejo Raiz();
+        TComplejo Raiz()const;
         // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
-        int Altura();
+        int Altura()const;
         // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
-        int Nodos();
+        int Nodos()const;
         // Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)
-        int NodosHoja();
+        int NodosHoja()const;
         // Devuelve el recorrido en inorden
         TVectorCom Inorden();
         // Devuelve el recorrido en preorden
