@@ -2,30 +2,10 @@
 #define TABBCOM_H_
 #include "tcomplejo.h"
 #include "tvectorcom.h"
-class TNodoABB
-{
-    private:
-        // El elemento del nodo
-        TComplejo e;
-        // El nodo anterior
-        TNodoABB *iz;
-        // El nodo siguiente
-        TNodoABB *de;
-    public:
-        // Constructor por defecto
-        TNodoABB ();
-        // Constructor de copia
-        TNodoABB (const TNodoABB &);
-        // Destructor
-        ~TNodoABB();
-        //copia
-        void Copia(const TNodoABB &);
-        // Sobrecarga del operador asignación
-        TNodoABB& operator=(const TNodoABB &);
-};
+class TNodoABB;
 class TABBCom
 {
-    private:
+        friend class TNodoABB;
         // Puntero al nodo
         TNodoABB *nodo;
         // AUXILIAR : Devuelve el recorrido en inorden
@@ -35,12 +15,14 @@ class TABBCom
         // AUXILIAR : Devuelve el recorrido en postorden
         void PostordenAux(TVectorCom &, int &);
     public:
+        //copia
+        void Copia(const TABBCom&);
         // Constructor por defecto
-        TABBCom ();
+        TABBCom();
         // Constructor de copia
-        TABBCom (TABBCom &);
+        TABBCom(TABBCom &);
         // Destructor
-        ~TABBCom ();
+        ~TABBCom();
         // Sobrecarga del operador asignación
         TABBCom & operator=(TABBCom &);
         //--------------------Metodos-----------------------
@@ -50,7 +32,7 @@ class TABBCom
         // Sobrecarga del operador igualdad
         bool operator==(TABBCom &);
         // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
-        bool EsVacio();
+        bool EsVacio()const;
         // Inserta el elemento en el árbol
         bool Insertar(TComplejo &);
         // Borra el elemento en el árbol
@@ -76,5 +58,24 @@ class TABBCom
         // Sobrecarga del operador salida
         friend ostream & operator<<(ostream &, TABBCom &);
 };
+class TNodoABB {
+friend class TABBCom;
+private:
+	// El elemento del nodo
+	TComplejo item;
+	// Subárbol izquierdo y derecho
+	TABBCom iz, de;
+public:
+	// Constructor por defecto
+	TNodoABB ();
 
+	// Constructor de copia
+	TNodoABB (TNodoABB &);
+
+	// Sobrecarga del operador asignación
+	TNodoABB & operator=( TNodoABB &);
+
+	// destructor de la clase
+	virtual ~TNodoABB();
+};
 #endif
