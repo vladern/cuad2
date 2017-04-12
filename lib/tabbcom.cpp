@@ -139,3 +139,46 @@ TVectorCom TABBCom::Inorden()
         return vec;
     }
 }
+TVectorCom TABBCom::Preorden()
+{
+    if(this->EsVacio())
+    {
+        //creo el vector con el numero de nodos que tiene el arbol
+        TVectorCom vec = TVectorCom(this->Nodos());
+        int pos = 1;
+        //llamo a la función recursiva para llenar el vector
+        this->PreordenAux(vec,pos);
+        return vec;
+    }else
+    {
+        TVectorCom vec;
+        return vec;
+    }
+}
+TVectorCom TABBCom::Postorden()
+{
+    if(this->EsVacio())
+    {
+        //creo el vector con el numero de nodos que tiene el arbol
+        TVectorCom vec = TVectorCom(this->Nodos());
+        int pos = 1;
+        //llamo a la función recursiva para llenar el vector
+        this->PostordenAux(vec,pos);
+        return vec;
+    }else
+    {
+        TVectorCom vec;
+        return vec;
+    }
+}
+// Devuelve la altura del árbol (la altura de un árbol vacío es 0)
+int TABBCom::Altura()
+{
+    if(this->EsVacio())
+    {
+        return 0;
+    }else
+    {
+        return 1 + max(this->nodo->iz.Altura(),this->nodo->de.Altura());
+    }
+}

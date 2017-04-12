@@ -2,6 +2,7 @@
 #define TABBCOM_H_
 #include "tcomplejo.h"
 #include "tvectorcom.h"
+#include <algorithm>
 class TNodoABB;
 class TABBCom
 {
@@ -58,7 +59,7 @@ class TABBCom
         // Sobrecarga del operador salida
         friend ostream & operator<<(ostream &, TABBCom &);
 };
-class TNodoABB {
+class TNodoABB{
 friend class TABBCom;
 private:
 	// El elemento del nodo
