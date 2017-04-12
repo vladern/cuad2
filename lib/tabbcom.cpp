@@ -213,3 +213,35 @@ int TABBCom::Altura()const
         return 1 + max(this->nodo->iz.Altura(),this->nodo->de.Altura());
     }
 }
+// Sobrecarga del operador igualdad
+bool TABBCom::operator==(TABBCom& arbol)
+{
+    if(this->Inorden()==arbol.Inorden())
+        return true;
+
+    return false;
+}
+// Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
+bool TABBCom::Buscar(const TComplejo& com)
+{
+    //vector con elementos en inorden
+    TVectorCom vec = this->Inorden();
+    //recorro todos los elemento en busca del que me han pasado   
+    for(int i=1;i<=this->Nodos();i++)
+    {
+        if(vec[i]==com)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+// Inserta el elemento en el árbol
+bool TABBCom::Insertar(const TComplejo& com)
+{
+    if(!this->Buscar(com))
+    {
+        
+    }
+    return false;
+}

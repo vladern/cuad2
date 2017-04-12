@@ -33,15 +33,15 @@ class TABBCom
         //--------------------------------------------------
         //--------------------------------------------------
         // Sobrecarga del operador igualdad
-        bool operator==(TABBCom &);
+        bool operator==(TABBCom&);
         // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
         bool EsVacio()const;
         // Inserta el elemento en el árbol
-        bool Insertar(TComplejo &);
+        bool Insertar(const TComplejo &);
         // Borra el elemento en el árbol
         bool Borrar(TComplejo &);
         // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-        bool Buscar(TComplejo &)const;
+        bool Buscar(const TComplejo &);
         // Devuelve el elemento en la raíz del árbol
         TComplejo Raiz()const;
         // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
