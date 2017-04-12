@@ -3,6 +3,7 @@
 #include "tcomplejo.h"
 #include "tvectorcom.h"
 #include <algorithm>
+#include <queue>
 class TNodoABB;
 class TABBCom
 {
@@ -15,6 +16,7 @@ class TABBCom
         void PreordenAux(TVectorCom &, int &);
         // AUXILIAR : Devuelve el recorrido en postorden
         void PostordenAux(TVectorCom &, int &);
+        void NivelesnAux(TVectorCom &, int &);
     public:
         //copia
         void Copia(const TABBCom&);

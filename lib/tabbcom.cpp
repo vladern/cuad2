@@ -171,6 +171,33 @@ TVectorCom TABBCom::Postorden()
         return vec;
     }
 }
+// Devuelve el recorrido en niveles
+TVectorCom TABBCom::Niveles()
+{
+    //cola de abb s
+    std::queue<TABBCom> c;
+    //una arbol abb
+    TABBCom aux;
+    int pos=1;
+    //vector
+    TVectorCom vec(this->Nodos());
+    // encolar en c
+    c.push((*this));
+    // mientras la cola no es vacia
+    while(!c.empty())
+    {
+        // auxiliar es igual a lo que haya en la cola
+        aux = c.front();
+        vec[pos]=aux.nodo->item;
+        c.pop();
+        if(!aux.nodo->iz.EsVacio())
+            c.push(aux.nodo->iz);
+        if(!aux.nodo->de.EsVacio())
+            c.push(aux.nodo->de);
+    }
+    return vec;
+    
+}
 // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
 int TABBCom::Altura()
 {
