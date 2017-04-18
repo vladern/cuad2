@@ -7,5 +7,13 @@ using namespace std;
 int
 main(void)
 {
-	TComplejo a ;
+	TComplejo a;
+	TABBCom arbol;
+	if(arbol.Insertar(a))
+	{
+		cout<<"Ok"<<endl;
+	}else
+	{
+		cout<<"Fail"<<endl;
+	}
 }

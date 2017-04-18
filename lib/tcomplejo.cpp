@@ -128,7 +128,7 @@ TComplejo TComplejo::operator*(double num)
         return atan2(this->im,this->re);
     } 
     // Calcula el Módulo 
-	double TComplejo::Mod(void)
+	double TComplejo::Mod(void)const
     {
        return sqrt(pow(this->re,2)+pow(im,2));
     }

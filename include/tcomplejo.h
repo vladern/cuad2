@@ -54,7 +54,7 @@ public:
 	void Im(double im) {this->im=im;}; // Modifica PARTE IMAGINARIA
 
 	double Arg(void); // Calcula el Argumento (en Radianes)
-	double Mod(void); // Calcula el Módulo
+	double Mod(void)const; // Calcula el Módulo
 	
 	void negativo(double&,double&);//Convierte el zero negativo(-0.0) a positivo(0.0)si es necesario
 

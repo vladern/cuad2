@@ -224,24 +224,122 @@ bool TABBCom::operator==(TABBCom& arbol)
 // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
 bool TABBCom::Buscar(const TComplejo& com)
 {
-    //vector con elementos en inorden
-    TVectorCom vec = this->Inorden();
-    //recorro todos los elemento en busca del que me han pasado   
-    for(int i=1;i<=this->Nodos();i++)
+    if(this->EsVacio())
     {
-        if(vec[i]==com)
-        {
-            return true;
-        }
+        return false;
     }
-    return false;
+    //si el modulo de la raiz es mayor que el modulo de num. complejo
+    if(this->nodo->item.Mod()>com.Mod())
+    {
+        this->nodo->iz.Buscar(com);
+    }else
+    {
+        this->nodo->de.Buscar(com);
+    }
 }
 // Inserta el elemento en el árbol
 bool TABBCom::Insertar(const TComplejo& com)
 {
+    //Compruebo que el complejo no este ya insertado
     if(!this->Buscar(com))
     {
-        
+        //si el arbol esta vacio iserto el primer elemento
+        if(this->EsVacio())
+        {
+            TNodoABB* aux = new TNodoABB();
+            aux->item=com;
+            this->nodo=aux;
+            return true;
+        }
+        //si la raiz es mayor que el complejo busco en el subarbol izquierdo
+        if(this->nodo->item.Mod()>com.Mod())
+        {
+            this->nodo->iz.Insertar(com);
+        //si la raiz es menor que el complejo busco en el subarbol derecho
+        }else
+        {
+            this->nodo->de.Insertar(com);
+        }
     }
     return false;
+}
+//min
+TComplejo TABBCom::min()
+{
+    if(this->EsVacio())
+    {
+        return this->nodo->item;
+    }
+    return this->nodo->iz.min();
+}
+//auxiliar de borrar
+TABBCom TABBCom::BorrarAux(const TComplejo& com)
+{
+    if(this->EsVacio())
+    {
+        TABBCom arbol;
+        return arbol;
+    }
+    if(this->nodo->item.Mod()>com.Mod())
+    {
+        this->nodo->iz.BorrarAux(com);
+    }else if(this->nodo->item.Mod()<com.Mod())
+    {
+        this->nodo->de.BorrarAux(com);
+    }
+    if(this->nodo->item.Mod()==com.Mod() && this->nodo->de.EsVacio())
+    {
+        return this->nodo->iz;
+    }
+    if(this->nodo->item.Mod()==com.Mod() && this->nodo->iz.EsVacio())
+    {
+        return this->nodo->de;
+    }
+    if(this->nodo->item.Mod()==com.Mod() && (!this->nodo->iz.EsVacio()))
+    {
+        this->nodo->item = this->nodo->de.min();
+        this->nodo->de.BorrarAux(this->nodo->de.min());
+        return (*this);
+    }
+}
+// Borra el elemento en el árbol
+bool TABBCom::Borrar(const TComplejo& com)
+{
+    if(this->EsVacio()) return false;
+
+    if(!this->Buscar(com)) return false;
+
+    (*this) = this->BorrarAux(com);
+    return true;
+}
+// Devuelve el elemento en la raíz del árbol
+TComplejo TABBCom::Raiz()
+{
+    if(this->EsVacio())
+    {
+        TComplejo co;
+        return co;
+    }
+    return this->nodo->item;
+}
+//devuelve true si es hoja
+bool TABBCom::EsHoja()
+{
+    if(this->nodo->iz.nodo==NULL && this->nodo->de.nodo==NULL)
+        return true;
+    return false;
+}
+// Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)
+int TABBCom::NodosHoja()
+{
+    if(this->EsHoja())
+    {
+        return 1;
+    }
+    return (this->nodo->iz.NodosHoja()+this->nodo->de.NodosHoja());
+}
+ostream& operator<<(ostream& os, TABBCom& com)
+{
+    os<<com.Niveles();
+    return os;
 }
