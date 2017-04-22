@@ -1,6 +1,6 @@
 TESTSCOMPLEJO=7
 TESTSVECTOR=8
-TESTSTLISTA=17
+TABBCOM=8
 nombreBase="tad"
 extension=".cpp"
 zero="0"
@@ -8,7 +8,7 @@ zero="0"
 echo "Autocorrector Cuadernillo 1 PED"
 echo "1. Test TComplejo"
 echo "2. Test TVectorCom"
-echo "3. Test TListaCom"
+echo "3. Test TABBCom"
 echo "4. Todos"
 echo 'Opcion: '
 read Opcion
@@ -64,9 +64,9 @@ if (( $Opcion == 2 || $Opcion == 4 )); then
 fi
 if (( $Opcion == 3 || $Opcion == 4 )); then
 	echo "//////////////////////////////////////////////////////////////////"
-	echo "///////////////////////Pruebas TListaCom/////////////////////////"
-	cp src/tlistacom/*.cpp src/
-	for (( i = 1; i <= $TESTSTLISTA; i++ )); do
+	echo "///////////////////////Pruebas TABBCom/////////////////////////"
+	cp src/tabbcom/*.cpp src/
+	for (( i = 1; i <= $TABBCOM; i++ )); do
 		
 		if (($i >= 10)); then
 			nombre=$nombreBase$i$extension 
@@ -77,7 +77,7 @@ if (( $Opcion == 3 || $Opcion == 4 )); then
 		mv src/$nombre src/tad.cpp
 		make > basura.txt
 		./tad > $i.txt
-		diff -b $i.txt salidas/tlistacom/$nombre.sal
+		diff -b $i.txt salidas/tabbcom/$nombre.sal
 		mv src/tad.cpp src/$nombre
 		rm ./tad
 		rm ./basura.txt

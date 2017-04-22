@@ -45,19 +45,20 @@ TABBCom& TABBCom::operator=(const TABBCom& arbol)
         (*this).~TABBCom();
         Copia(arbol);
     }
+    return(*this);
 }
 //copia
 void TABBCom::Copia(const TABBCom& arbol)
 {
-    if(arbol.nodo!=NULL)
+    if(!arbol.EsVacio())
     {
         //nodo auxiliar
         TNodoABB * aux = new TNodoABB();
         aux->item = arbol.nodo->item;
         this->nodo=aux;
         //Recursivamente para todos los demas subarboles
-        this->Copia(arbol.nodo->iz);
-        this->Copia(arbol.nodo->de);
+        this->nodo->iz.Copia(arbol.nodo->iz);
+        this->nodo->de.Copia(arbol.nodo->de);
         //Termino con la recursion y me voy a tomarme unas cervezas :)
     }else
     {
@@ -76,30 +77,32 @@ bool TABBCom::EsVacio() const
     }
 }
 // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
-int TABBCom::Nodos()const
+int TABBCom::Nodos()
 {
+    
     if(this->EsVacio())
     {
-        return 1;
-    }else
-    {
-        //voy recoriendo todos los nodos recursivamente por la izquierda y derecha
-        int tot = this->nodo->iz.Nodos() + this->nodo->de.Nodos();
-        return tot;
+        return 0;
     }
+    else
+	{
+		int total= 1 + this->nodo->de.Nodos() + this->nodo->iz.Nodos();
+		return total;
+	}
 }
 //Inorde auxiliar
 void TABBCom::InordenAux(TVectorCom &v,int &posicion)
 {
-	if(nodo!=NULL)
+	if(this->nodo!=NULL)
 	{
         //itero recursivamente por el subarbol izquierdo
 		this->nodo->iz.InordenAux(v,posicion);
         //inserto la raiz en el vector
 		v[posicion]=this->nodo->item;
+        posicion++;
         //itero recursivamente por el subarbol derecho
         this->nodo->de.InordenAux(v,posicion);
-		posicion++;
+		
 	}
 }
 void TABBCom::PreordenAux(TVectorCom &v,int &posicion)
@@ -125,10 +128,10 @@ void TABBCom::PostordenAux(TVectorCom &v,int &posicion)
 // Devuelve el recorrido en inorden
 TVectorCom TABBCom::Inorden()
 {
-    if(this->EsVacio())
+    if(!this->EsVacio())
     {
         //creo el vector con el numero de nodos que tiene el arbol
-        TVectorCom vec = TVectorCom(this->Nodos());
+        TVectorCom vec = TVectorCom(this->Nodos()); //esto no tiene ni puto sentido joder :( si hago lo mismo pero en Nodos() no funciona
         int pos = 1;
         //llamo a la función recursiva para llenar el vector
         this->InordenAux(vec,pos);
@@ -174,6 +177,7 @@ TVectorCom TABBCom::Postorden()
 // Devuelve el recorrido en niveles
 TVectorCom TABBCom::Niveles()
 {
+         
     //cola de abb s
     queue<TABBCom> c;
     //una arbol abb
@@ -181,6 +185,11 @@ TVectorCom TABBCom::Niveles()
     int pos=1;
     //vector
     TVectorCom vec(this->Nodos());
+    //si el arbol esta vacio devuelvo un vector vacio
+    if(this->nodo==NULL)
+    {
+        return vec;
+    }
     // encolar en c
     c.push((*this));
     // mientras la cola no es vacia
@@ -216,13 +225,16 @@ int TABBCom::Altura()const
 // Sobrecarga del operador igualdad
 bool TABBCom::operator==(TABBCom& arbol)
 {
-    if(this->Inorden()==arbol.Inorden())
+    if(this->Postorden()==arbol.Postorden())
+    {
         return true;
+    }
+        
 
     return false;
 }
 // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-bool TABBCom::Buscar(const TComplejo& com)
+bool TABBCom::Buscar(TComplejo& com)
 {
     if(this->EsVacio())
     {
@@ -231,14 +243,17 @@ bool TABBCom::Buscar(const TComplejo& com)
     //si el modulo de la raiz es mayor que el modulo de num. complejo
     if(this->nodo->item.Mod()>com.Mod())
     {
-        this->nodo->iz.Buscar(com);
+        return this->nodo->iz.Buscar(com);
+    }else if(this->nodo->item.Mod()<com.Mod())
+    {
+        return this->nodo->de.Buscar(com);
     }else
     {
-        this->nodo->de.Buscar(com);
+        return true;
     }
 }
 // Inserta el elemento en el árbol
-bool TABBCom::Insertar(const TComplejo& com)
+bool TABBCom::Insertar(TComplejo& com)
 {
     //Compruebo que el complejo no este ya insertado
     if(!this->Buscar(com))
@@ -254,11 +269,11 @@ bool TABBCom::Insertar(const TComplejo& com)
         //si la raiz es mayor que el complejo busco en el subarbol izquierdo
         if(this->nodo->item.Mod()>com.Mod())
         {
-            this->nodo->iz.Insertar(com);
+            return this->nodo->iz.Insertar(com);
         //si la raiz es menor que el complejo busco en el subarbol derecho
         }else
         {
-            this->nodo->de.Insertar(com);
+            return this->nodo->de.Insertar(com);
         }
     }
     return false;
@@ -277,15 +292,16 @@ TABBCom TABBCom::BorrarAux(const TComplejo& com)
 {
     if(this->EsVacio())
     {
-        TABBCom arbol;
-        return arbol;
+        return (*this);
     }
     if(this->nodo->item.Mod()>com.Mod())
     {
-        this->nodo->iz.BorrarAux(com);
+        this->nodo->iz = this->nodo->iz.BorrarAux(com);
+        return(*this);
     }else if(this->nodo->item.Mod()<com.Mod())
     {
-        this->nodo->de.BorrarAux(com);
+        this->nodo->de = this->nodo->de.BorrarAux(com);
+        return (*this);
     }
     if(this->nodo->item.Mod()==com.Mod() && this->nodo->de.EsVacio())
     {
@@ -303,12 +319,10 @@ TABBCom TABBCom::BorrarAux(const TComplejo& com)
     }
 }
 // Borra el elemento en el árbol
-bool TABBCom::Borrar(const TComplejo& com)
+bool TABBCom::Borrar(TComplejo& com)
 {
     if(this->EsVacio()) return false;
-
-    if(!this->Buscar(com)) return false;
-
+    if(!this->Buscar(com)) return false; 
     (*this) = this->BorrarAux(com);
     return true;
 }
@@ -325,18 +339,27 @@ TComplejo TABBCom::Raiz()
 //devuelve true si es hoja
 bool TABBCom::EsHoja()
 {
-    if(this->nodo->iz.nodo==NULL && this->nodo->de.nodo==NULL)
+    if(this->nodo==NULL)
         return true;
-    return false;
+	if(this->nodo->iz.nodo == NULL and this->nodo->de.nodo == NULL)
+	{
+		return true;
+	}else
+	{
+		return false;
+	}
 }
 // Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)
 int TABBCom::NodosHoja()
 {
+    if(this->EsVacio())
+        return 0;
     if(this->EsHoja())
     {
         return 1;
     }
-    return (this->nodo->iz.NodosHoja()+this->nodo->de.NodosHoja());
+    int total = this->nodo->iz.NodosHoja()+this->nodo->de.NodosHoja();
+    return (total);
 }
 ostream& operator<<(ostream& os, TABBCom& com)
 {

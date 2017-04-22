@@ -37,21 +37,21 @@ class TABBCom
         // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
         bool EsVacio()const;
         // Inserta el elemento en el árbol
-        bool Insertar(const TComplejo &);
+        bool Insertar(TComplejo &);
         //min
         TComplejo min();
         //Borrar aux
         TABBCom BorrarAux(const TComplejo& com);
         // Borra el elemento en el árbol
-        bool Borrar(const TComplejo &);
+        bool Borrar(TComplejo &);
         // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-        bool Buscar(const TComplejo &);
+        bool Buscar( TComplejo &);
         // Devuelve el elemento en la raíz del árbol
         TComplejo Raiz();
         // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
         int Altura()const;
         // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
-        int Nodos()const;
+        int Nodos();
         //devuelve true es un nodo hoja
         bool EsHoja();
         // Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)

@@ -5,7 +5,7 @@
             "name": "C++ Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "enter program name, for example ${workspaceRoot}/a.out",
+            "program": "${workspaceRoot}/src/tad.cpp",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
