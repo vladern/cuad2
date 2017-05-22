@@ -1,5 +1,9 @@
 /* Prueba:
-    - BORRADO CON 2 HIJOS 
+operador == de árboles
+
+Orden de inserción: 2, 4, 8 y 10
+Orden de inserción: 10, 8, 4 y 2
+
 */
 
 #include <iostream>
@@ -11,44 +15,34 @@ using namespace std;
 int
 main(void)
 {
-  
-  TABBCom a;
 
-  TComplejo c1(20, 1);
-  TComplejo c2(10, 1);
-  TComplejo c3(24, 1);
-  TComplejo c4(8, 1);
-  TComplejo c5(12, 1);
-  TComplejo c6(26, 1);
-  TComplejo c7(28, 1);
+  TABBCom a,b;
 
-  TComplejo c8(88, 1);
+  TComplejo c2(2, 2);
+  TComplejo c4(4, 4);
+  TComplejo c8(8, 8);
+  TComplejo c10(10, 10);
 
-  a.Insertar(c1);
   a.Insertar(c2);
-  a.Insertar(c3);
   a.Insertar(c4);
-  a.Insertar(c5);
-  a.Insertar(c6);
-  a.Insertar(c7);
+  a.Insertar(c8);
+  a.Insertar(c10);
 
-  if(!a.Borrar(c1))
-  	cout << "Error NO BORRADO" << endl;
+  b.Insertar(c10);
+  b.Insertar(c8);
+  b.Insertar(c4);
+  b.Insertar(c2);
 
-  if(!a.Borrar(c5))
-  	cout << "Error NO BORRADO" << endl;
+  if (a==b)
 
-  if(!a.Borrar(c8))
-  	cout << "Error NO BORRADO" << endl;
+	cout << "IGUALES" << endl;
 
-  if(!a.Borrar(c2))
-  	cout << "Error NO BORRADO" << endl;
+  else 
 
-  if(!a.Borrar(c4))
-  	cout << "Error NO BORRADO" << endl;
-
-  cout << a.Inorden() << endl;
+	cout << "NO IGUALES" << endl;
 
 
   return 1;
 }
+
+

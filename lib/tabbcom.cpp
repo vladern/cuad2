@@ -107,22 +107,30 @@ void TABBCom::InordenAux(TVectorCom &v,int &posicion)
 }
 void TABBCom::PreordenAux(TVectorCom &v,int &posicion)
 {
-	if(nodo!=NULL)
+	if(this->nodo!=NULL)
 	{
+        //inserto la raiz en el vector
 		v[posicion]=this->nodo->item;
-		posicion++;
+        posicion++;
+        //itero recursivamente por el subarbol izquierdo
 		this->nodo->iz.PreordenAux(v,posicion);
-		this->nodo->de.PreordenAux(v,posicion);
+        //itero recursivamente por el subarbol derecho
+        this->nodo->de.PreordenAux(v,posicion);
+		
 	}
 }
 void TABBCom::PostordenAux(TVectorCom &v,int &posicion)
 {
-	if(nodo!=NULL)
+	if(this->nodo!=NULL)
 	{
+        //itero recursivamente por el subarbol izquierdo
 		this->nodo->iz.PostordenAux(v,posicion);
-		this->nodo->de.PostordenAux(v,posicion);
+        //itero recursivamente por el subarbol derecho
+        this->nodo->de.PostordenAux(v,posicion);
+        //inserto la raiz en el vector
 		v[posicion]=this->nodo->item;
-		posicion++;
+        posicion++;
+		
 	}
 }
 // Devuelve el recorrido en inorden
@@ -144,7 +152,7 @@ TVectorCom TABBCom::Inorden()
 }
 TVectorCom TABBCom::Preorden()
 {
-    if(this->EsVacio())
+    if(!this->EsVacio())
     {
         //creo el vector con el numero de nodos que tiene el arbol
         TVectorCom vec = TVectorCom(this->Nodos());
@@ -160,7 +168,7 @@ TVectorCom TABBCom::Preorden()
 }
 TVectorCom TABBCom::Postorden()
 {
-    if(this->EsVacio())
+    if(!this->EsVacio())
     {
         //creo el vector con el numero de nodos que tiene el arbol
         TVectorCom vec = TVectorCom(this->Nodos());
@@ -281,12 +289,18 @@ bool TABBCom::Insertar(TComplejo& com)
 //min
 TComplejo TABBCom::min()
 {
-    if(this->EsVacio())
+    //min( crea_arbin( ) ) = error_item( )
+   /* if(this->EsVacio())
     {
         return TComplejo();
-    }else if(this->nodo->iz.EsVacio())
+
+    }*/
+    //si esvacio( i ) entonces
+    if(this->nodo->iz.EsVacio())
     {
+        //min( enraizar( i, x, d ) ) = x
         return this->nodo->item;
+    //si no min( enraizar( i, x, d ) ) = min( i ) fsi
     }else
     {
         return this->nodo->iz.min();
@@ -295,31 +309,42 @@ TComplejo TABBCom::min()
 //auxiliar de borrar
 TABBCom TABBCom::BorrarAux(const TComplejo& com)
 {
+    //borrar( crea_arbin( ), x ) = crea_arbin()
     if(this->EsVacio())
     {
-        return (*this);
+        return TABBCom();
     }
-    if(this->nodo->item.Mod()>com.Mod())
+    //si ( y < x ) entonces
+    if(com.Mod() < this->nodo->item.Mod())
     {
+        //borrar( enraizar( i, x, d ), y ) = enraizar( borrar( i, y ), x, d )
         this->nodo->iz = this->nodo->iz.BorrarAux(com);
         return(*this);
-    }else if(this->nodo->item.Mod()<com.Mod())
+    //sino si ( y > x ) entonces
+    }else if( com.Mod() > this->nodo->item.Mod())
     {
+        //borrar(enraizar( i, x, d ), y ) = enraizar( i, x, borrar( d, y )) fsi
         this->nodo->de = this->nodo->de.BorrarAux(com);
         return (*this);
     }
+    //si(y==x) y esvacio(d) entonces
     if(this->nodo->item.Mod()==com.Mod() && this->nodo->de.EsVacio())
     {
+        //borrar( enraizar( i, x, d ), y ) = i fsi
         return this->nodo->iz;
     }
+    //si ( y==x ) y esvacio( i ) entonces
     if(this->nodo->item.Mod()==com.Mod() && this->nodo->iz.EsVacio())
     {
+        //borrar( enraizar( i, x, d ), y ) = d fsi
         return this->nodo->de;
     }
-    if(this->nodo->item.Mod()==com.Mod() && (!this->nodo->iz.EsVacio()))
+    //si (y==x) y no esvacio(d) y no esvacio(i) entonces
+    if(this->nodo->item.Mod()==com.Mod() && (!this->nodo->de.EsVacio()) && (!this->nodo->iz.EsVacio()))
     {
+        //borrar( enraizar( i, x, d ), y ) = enraizar( i, min( d ), borrar( d, min( d ) ) ) fsi
         this->nodo->item = this->nodo->de.min();
-        this->nodo->de.BorrarAux(this->nodo->de.min());
+        this->nodo->de = this->nodo->de.BorrarAux(this->nodo->de.min());
         return (*this);
     }
 }
@@ -327,6 +352,9 @@ TABBCom TABBCom::BorrarAux(const TComplejo& com)
 bool TABBCom::Borrar(const TComplejo& com)
 {
     if(this->EsVacio())
+    {
+        return false;
+    }else if(!this->Buscar(com))
     {
         return false;
     }
