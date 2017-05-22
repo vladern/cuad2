@@ -1,5 +1,1 @@
-Insertado
-No insertado
-Borrado
-No borrado
-Insertado
+Preorden=[(1) (2 0), (2) (4 0), (3) (7 0), (4) (8 0), (5) (9 0), (6) (10 0)]

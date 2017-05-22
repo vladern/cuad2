@@ -1,5 +1,7 @@
 /* Prueba:
-    - INORDEN, BORRADO 
+    - Comprobar sustitucion mayor izquierda
+    - Comprobar sustitucion unico hijo
+
 */
 
 #include <iostream>
@@ -14,43 +16,46 @@ main(void)
   
   TABBCom a;
 
-  TComplejo c1(20, 1);
-  TComplejo c2(10, 1);
-  TComplejo c3(24, 1);
-  TComplejo c4(8, 1);
-  TComplejo c5(12, 1);
-  TComplejo c6(26, 1);
-  TComplejo c7(28, 1);
-
-  a.Insertar(c1);
-  a.Insertar(c2);
-  a.Insertar(c3);
-  a.Insertar(c4);
-  a.Insertar(c5);
-  a.Insertar(c6);
+  TComplejo c7(7, 0);
+  TComplejo c4(4, 0);
+  TComplejo c10(10, 0);
+  TComplejo c2(2, 0);
+  TComplejo c5(5, 0);
+  TComplejo c8(8, 0);
+  TComplejo c9(9, 0);
+  
+  
+  //Comprobar sustitucion mayor izquierda
   a.Insertar(c7);
-
-  if(!a.Borrar(c7))
-  	cout << "Error NO BORRADO" << endl;
-  if(!a.Borrar(c6))
-  	cout << "Error NO BORRADO" << endl;
-  if(!a.Borrar(c3))
-  	cout << "Error NO BORRADO" << endl;
-
-  cout << a.Inorden() << endl;
-
-  if(!a.Borrar(c5))
-  	cout << "Error NO BORRADO" << endl;
-  if(!a.Borrar(c4))
-  	cout << "Error NO BORRADO" << endl;
-  if(!a.Borrar(c2))
-  	cout << "Error NO BORRADO" << endl;
-  if(!a.Borrar(c1))
-  	cout << "Error NO BORRADO" << endl;
-
-  cout << a.Inorden() << endl;
-
+  a.Insertar(c4);
+  a.Insertar(c10);
+  a.Insertar(c8);
+  a.Insertar(c9);
+  a.Insertar(c5);
+  a.Insertar(c2);
+  
+  a.Borrar(c7);
+  
+  cout<<"Preorden="<<a.Preorden()<<endl;
+  
+  //Comprobar sustitucion unico hijo
+  
+  TABBCom b;
+  
+  b.Insertar(c2);
+  b.Insertar(c4);
+  b.Insertar(c5);
+  b.Insertar(c7);
+  b.Insertar(c8);
+  b.Insertar(c9);
+  b.Insertar(c10);
+  
+  b.Borrar(c2);
+  
+  cout<<"Preorden="<<b.Preorden()<<endl;
 
 
   return 1;
 }
+
+

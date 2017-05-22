@@ -234,7 +234,7 @@ bool TABBCom::operator==(TABBCom& arbol)
     return false;
 }
 // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-bool TABBCom::Buscar(TComplejo& com)
+bool TABBCom::Buscar(const TComplejo& com)
 {
     if(this->EsVacio())
     {
@@ -283,9 +283,14 @@ TComplejo TABBCom::min()
 {
     if(this->EsVacio())
     {
+        return TComplejo();
+    }else if(this->nodo->iz.EsVacio())
+    {
         return this->nodo->item;
+    }else
+    {
+        return this->nodo->iz.min();
     }
-    return this->nodo->iz.min();
 }
 //auxiliar de borrar
 TABBCom TABBCom::BorrarAux(const TComplejo& com)
@@ -319,11 +324,13 @@ TABBCom TABBCom::BorrarAux(const TComplejo& com)
     }
 }
 // Borra el elemento en el árbol
-bool TABBCom::Borrar(TComplejo& com)
+bool TABBCom::Borrar(const TComplejo& com)
 {
-    if(this->EsVacio()) return false;
-    if(!this->Buscar(com)) return false; 
-    (*this) = this->BorrarAux(com);
+    if(this->EsVacio())
+    {
+        return false;
+    }
+    this->BorrarAux(com);
     return true;
 }
 // Devuelve el elemento en la raíz del árbol

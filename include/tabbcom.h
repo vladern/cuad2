@@ -43,9 +43,9 @@ class TABBCom
         //Borrar aux
         TABBCom BorrarAux(const TComplejo& com);
         // Borra el elemento en el árbol
-        bool Borrar(TComplejo &);
+        bool Borrar(const TComplejo &);
         // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-        bool Buscar( TComplejo &);
+        bool Buscar(const TComplejo &);
         // Devuelve el elemento en la raíz del árbol
         TComplejo Raiz();
         // Devuelve la altura del árbol (la altura de un árbol vacío es 0)

@@ -1,5 +1,5 @@
 /* Prueba:
-    - ALTURA, NODOS, NODOSHOJA   
+    - Comprobar borrar hoja
 */
 
 #include <iostream>
@@ -11,52 +11,30 @@ using namespace std;
 int
 main(void)
 {
-
   
   TABBCom a;
- 
-  TComplejo c100(100, 1);
-  TComplejo c50(50, 1);
-  TComplejo c20(20, 1);
-  TComplejo c110(110, 1);
- 
 
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
+  TComplejo c7(7, 0);
+  TComplejo c4(4, 0);
+  TComplejo c10(10, 0);
+  TComplejo c2(2, 0);
+  TComplejo c5(5, 0);
+  TComplejo c8(8, 0);
+  TComplejo c9(9, 0);
+  
+  a.Insertar(c2);
+  a.Insertar(c4);
+  a.Insertar(c5);
+  a.Insertar(c7);
+  a.Insertar(c8);
+  a.Insertar(c9);
+  a.Insertar(c10);
+  
+  a.Borrar(c10);
+  
+  cout<<"Preorden="<<a.Preorden()<<endl;
 
-  a.Insertar(c100);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Insertar(c50);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Insertar(c20);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Insertar(c110);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Borrar(c20);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-
-  return 1; 
-
+  return 1;
 }
+
+

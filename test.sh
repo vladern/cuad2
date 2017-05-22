@@ -1,6 +1,6 @@
 TESTSCOMPLEJO=7
 TESTSVECTOR=8
-TABBCOM=8
+TABBCOM=10
 nombreBase="tad"
 extension=".cpp"
 zero="0"
@@ -15,7 +15,7 @@ read Opcion
 if (( $Opcion == 1 || $Opcion == 4 )); then
 	
 	echo "//////////////////////////////////////////////////////////////////"
-	echo "///////////////////////Pruebas TComplejo//////////////////////////////"
+	echo "///////////////////////Pruebas TComplejo//////////////////////////"
 	cp src/tcomplejo/*.cpp src/
 	for (( i = 1; i <= $TESTSCOMPLEJO; i++ )); do
 		

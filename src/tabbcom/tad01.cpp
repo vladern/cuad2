@@ -1,5 +1,5 @@
 /* Prueba:
-    - CONSTR. COPIA , "=" ; posible copia de punteros 
+    - INSERCION/BORRADO MULTIPLE
 */
 
 #include <iostream>
@@ -11,28 +11,32 @@ using namespace std;
 int
 main(void)
 {
-
+  
   TABBCom a;
 
-  TComplejo c1(1), c2(2, 3);
+  int num;
+  for(num=1; num<=100; num++)
+  {
+  	TComplejo c1( (double) num, 1);
 
-  a.Insertar(c1);
+  	if(!a.Insertar(c1))
+		cout << "Error NO INSERCION" << endl;
+	c1.~TComplejo();
+  }
 
-  TABBCom b(a), c;
-  c=b;
-
-  a.Insertar(c2);
-  if( a.Inorden() == b.Inorden() )
-        cout << "MAL! SE HAN COPIADO PUNTEROS" << endl;
-  else
-	cout << "CORRECTO CONSTRUCTOR DE COPIA" << endl;
+  cout << "CORRECTA INSERCION MULTIPLE" << endl;
 
 
-  b.Insertar(c2);
-  if( b.Inorden() == c.Inorden() )
-        cout << "MAL! SE HAN COPIADO PUNTEROS" << endl;
-  else
-	cout << "CORRECTA ASIGNACION" << endl;
+  for(num=1; num<=100; num++)
+  {
+  	TComplejo c1( (double) num, 1);
+  	if(!a.Borrar(c1))
+		cout << "Error NO BORRADO" << endl;
+	c1.~TComplejo ();
+  }
 
-  return 1;
+  cout << "CORRECTO BORRADO MULTIPLE" << endl;
+
+return 1;
+
 }
