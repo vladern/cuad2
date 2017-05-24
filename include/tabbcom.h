@@ -39,7 +39,7 @@ class TABBCom
         // Inserta el elemento en el árbol
         bool Insertar(TComplejo &);
         //min
-        TComplejo min();
+        TComplejo maxi();
         //Borrar aux
         TABBCom BorrarAux(const TComplejo& com);
         // Borra el elemento en el árbol

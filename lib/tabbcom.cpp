@@ -128,9 +128,8 @@ void TABBCom::PostordenAux(TVectorCom &v,int &posicion)
         //itero recursivamente por el subarbol derecho
         this->nodo->de.PostordenAux(v,posicion);
         //inserto la raiz en el vector
-		v[posicion]=this->nodo->item;
         posicion++;
-		
+		v[posicion]=this->nodo->item;	
 	}
 }
 // Devuelve el recorrido en inorden
@@ -233,8 +232,12 @@ int TABBCom::Altura()const
 // Sobrecarga del operador igualdad
 bool TABBCom::operator==(TABBCom& arbol)
 {
-    if(this->Postorden()==arbol.Postorden())
+    for(int i=1;i<=arbol.Inorden().Tamano();i++)
     {
+        if(!this->Buscar(arbol.Inorden()[i]))
+        {
+            return false;
+        }
         return true;
     }
         
@@ -287,23 +290,17 @@ bool TABBCom::Insertar(TComplejo& com)
     return false;
 }
 //min
-TComplejo TABBCom::min()
+TComplejo TABBCom::maxi()
 {
-    //min( crea_arbin( ) ) = error_item( )
-   /* if(this->EsVacio())
-    {
-        return TComplejo();
-
-    }*/
-    //si esvacio( i ) entonces
-    if(this->nodo->iz.EsVacio())
+    //si esvacio(i) entonces
+    if(this->nodo->de.EsVacio())
     {
         //min( enraizar( i, x, d ) ) = x
         return this->nodo->item;
     //si no min( enraizar( i, x, d ) ) = min( i ) fsi
     }else
     {
-        return this->nodo->iz.min();
+        return this->nodo->de.maxi();
     }
 }
 //auxiliar de borrar
@@ -342,9 +339,9 @@ TABBCom TABBCom::BorrarAux(const TComplejo& com)
     //si (y==x) y no esvacio(d) y no esvacio(i) entonces
     if(this->nodo->item.Mod()==com.Mod() && (!this->nodo->de.EsVacio()) && (!this->nodo->iz.EsVacio()))
     {
-        //borrar( enraizar( i, x, d ), y ) = enraizar( i, min( d ), borrar( d, min( d ) ) ) fsi
-        this->nodo->item = this->nodo->de.min();
-        this->nodo->de = this->nodo->de.BorrarAux(this->nodo->de.min());
+        //sustituyo por el mayor de la izquierda
+        this->nodo->item = this->nodo->iz.maxi();
+        this->nodo->iz = this->nodo->iz.BorrarAux(this->nodo->iz.maxi());
         return (*this);
     }
 }
@@ -358,7 +355,7 @@ bool TABBCom::Borrar(const TComplejo& com)
     {
         return false;
     }
-    this->BorrarAux(com);
+    (*this)=this->BorrarAux(com);
     return true;
 }
 // Devuelve el elemento en la raíz del árbol

@@ -1,9 +1,5 @@
 /* Prueba:
-operador == de árboles
-
-Orden de inserción: 2, 4, 8 y 10
-Orden de inserción: 10, 8, 4 y 2
-
+    - INSERCION/BORRADO MULTIPLE
 */
 
 #include <iostream>
@@ -15,34 +11,32 @@ using namespace std;
 int
 main(void)
 {
+  
+  TABBCom a;
 
-  TABBCom a,b;
+  int num;
+  for(num=1; num<=100; num++)
+  {
+  	TComplejo c1( (double) num, 1);
 
-  TComplejo c2(2, 2);
-  TComplejo c4(4, 4);
-  TComplejo c8(8, 8);
-  TComplejo c10(10, 10);
+  	if(!a.Insertar(c1))
+		cout << "Error NO INSERCION" << endl;
+	c1.~TComplejo();
+  }
 
-  a.Insertar(c2);
-  a.Insertar(c4);
-  a.Insertar(c8);
-  a.Insertar(c10);
-
-  b.Insertar(c10);
-  b.Insertar(c8);
-  b.Insertar(c4);
-  b.Insertar(c2);
-
-  if (a==b)
-
-	cout << "IGUALES" << endl;
-
-  else 
-
-	cout << "NO IGUALES" << endl;
+  cout << "CORRECTA INSERCION MULTIPLE" << endl;
 
 
-  return 1;
+  for(num=1; num<=100; num++)
+  {
+  	TComplejo c1( (double) num, 1);
+  	if(!a.Borrar(c1))
+		cout << "Error NO BORRADO" << endl;
+	c1.~TComplejo ();
+  }
+
+  cout << "CORRECTO BORRADO MULTIPLE" << endl;
+
+return 1;
+
 }
-
-
