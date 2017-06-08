@@ -17,6 +17,81 @@ TNodoABB::~TNodoABB()
 *--------------------ABBComplejo----------------------
 *
 */
+/*Examen Junio 2014*/
+TComplejo TABBCom::getMin(TListaCom& l,TComplejo& min)
+{
+    if(l.EsVacia())
+    {
+        return min;
+    }
+    TComplejo primer = l.Obtener(l.Primera());
+    if(min.Mod() > primer.Mod())
+    {
+        l.Borrar(l.Primera());
+        return this->getMin(l,primer);
+    }
+    l.Borrar(l.Primera());
+    return this->getMin(l,min);
+}
+TComplejo TABBCom::getMax(TListaCom& l,TComplejo& max)
+{
+    if(l.EsVacia())
+    {
+        return max;
+    }
+    TComplejo primer = l.Obtener(l.Primera());
+    if(max.Mod() < primer.Mod())
+    {
+        l.Borrar(l.Primera());
+        return this->getMax(l,primer);
+    }
+
+    l.Borrar(l.Primera());
+    return this->getMax(l,max);
+}
+//busco el parametro a en el arbol una vez encontrada busco a b en el arbol de a
+bool TABBCom::camino(TComplejo a,TComplejo b)
+{
+    if(this->EsVacio())
+    {
+        return false;
+    }
+    //si el modulo de la raiz es mayor que el modulo de num. complejo
+    if(this->nodo->item.Mod() > a.Mod())
+    {
+        return this->nodo->iz.camino(a,b);
+    }else if(this->nodo->item.Mod() < a.Mod())
+    {
+        return this->nodo->de.camino(a,b);
+    }else
+    {
+        if(this->Buscar(b))
+        {
+            return true;
+        }
+         return false;
+    }
+}
+bool TABBCom::examen(TListaCom& l)
+{
+    TComplejo min(l.Obtener(l.Primera()));
+    TComplejo max(l.Obtener(l.Primera()));
+    //consigo el complejo minimo
+    min = this->getMin(l,min);
+    //consigo el complejo maximo
+    max = this->getMax(l,max);
+    //si no hay camino ni entre max min o min max devuelvo false
+    if(this->camino(min,max)==false && this->camino(max,min)==false)
+    {
+        return false;
+    }
+    return true;
+}
+/*-----------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------*/
 // Constructor por defecto
 TABBCom::TABBCom()
 {

@@ -2,6 +2,7 @@
 #define TABBCOM_H__
 #include "tcomplejo.h"
 #include "tvectorcom.h"
+#include "tlistacom.h"
 #include <algorithm>
 
 class TNodoABB;
@@ -18,6 +19,16 @@ class TABBCom
         void PostordenAux(TVectorCom &, int &);
         void NivelesnAux(TVectorCom &, int &);
     public:
+        /*Examen Junio 2014*/
+        TComplejo getMin(TListaCom& ,TComplejo&);
+        TComplejo getMax(TListaCom& ,TComplejo&);
+        bool camino(TComplejo a,TComplejo b);
+        bool examen(TListaCom& );
+        /*-----------------------
+        -------------------------
+        -------------------------
+        -------------------------
+        -------------------------*/
         //copia
         void Copia(const TABBCom&);
         // Constructor por defecto

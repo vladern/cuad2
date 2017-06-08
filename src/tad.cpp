@@ -1,7 +1,3 @@
-/* Prueba:
-    - INSERCION/BORRADO MULTIPLE
-*/
-
 #include <iostream>
 #include "tabbcom.h"
 #include "tcomplejo.h"
@@ -11,32 +7,44 @@ using namespace std;
 int
 main(void)
 {
-  
   TABBCom a;
 
-  int num;
-  for(num=1; num<=100; num++)
+  TComplejo c1(68, 1);
+  TComplejo c2(56, 1);
+  TComplejo c3(84, 1);
+  TComplejo c4(35, 1);
+  TComplejo c5(60, 1);
+  TComplejo c6(80, 1);
+  TComplejo c7(98, 1);
+
+  a.Insertar(c1);
+  a.Insertar(c2);
+  a.Insertar(c3);
+  a.Insertar(c4);
+  a.Insertar(c5);
+  a.Insertar(c6);
+  a.Insertar(c7);
+
+  TListaCom l1;
+  if(l1.EsVacia())
   {
-  	TComplejo c1( (double) num, 1);
-
-  	if(!a.Insertar(c1))
-		cout << "Error NO INSERCION" << endl;
-	c1.~TComplejo();
-  }
-
-  cout << "CORRECTA INSERCION MULTIPLE" << endl;
-
-
-  for(num=1; num<=100; num++)
+    cout<<"true"<<endl;
+  }else
   {
-  	TComplejo c1( (double) num, 1);
-  	if(!a.Borrar(c1))
-		cout << "Error NO BORRADO" << endl;
-	c1.~TComplejo ();
+     cout<<"false"<<endl;
   }
+  l1.InsCabeza(c1);
+  l1.InsCabeza(c2);
+  l1.InsCabeza(c5);
 
-  cout << "CORRECTO BORRADO MULTIPLE" << endl;
-
+  if(a.examen(l1))
+  {
+    cout<<"Si hay camino"<<endl;
+  }else
+  {
+    cout<<"No hay camino"<<endl;
+  }
+  
 return 1;
 
 }
